@@ -10,7 +10,7 @@ public class DbConnectionFactory {
 	private String driver = "com.mysql.jdbc.Driver";
 	private String url = "jdbc:mysql://localhost:3306/todo";
 	private String username = "root";
-	private String password = "r00t";
+	private String password = "";
 	
 	private DbConnectionFactory() throws Exception {
 		//carrega driver do banco de dados
