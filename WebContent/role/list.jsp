@@ -2,6 +2,9 @@
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -11,10 +14,8 @@
 <body>
 	<h1>List of Roles</h1>
 	
-	<% String ctx = request.getContextPath(); %>
-	
 	<p>
-	<a href="<%=ctx%>/role/create">Add new</a>
+	<a href="<c:url value="/role/create"/>">Add new</a>
 	</p>
 	
 	<table>
@@ -23,28 +24,29 @@
 			<th>Name</th>
 			<th>Manager?</th>
 		</tr>
-		<% List<Role> list = (List<Role>)request.getAttribute("list");%>
-		
-		<% for (Role role : list) {%>
+		<c:forEach var="role" items="${list}">
 		<tr>
-			<td><%= role.getId() %></td>
-			<td><%= role.getName() %></td>
-			<td><%= role.isManager() ? "Yes" : "No" %></td>
+			<td>${role.id}</td>
+			<td>${role.name}</td>
+			<td>${role.manager ? "Yes" : "No" }</td>
 			<td>
-			<a href="<%=ctx%>/role/update?id=<%=role.getId()%>">
-				Edit
-			</a>
+			<c:url value="/role/update" var="updateUrl">
+				<c:param name="id" value="${role.id}"/>
+			</c:url>
+			<a href="${updateUrl}">Edit</a>
 			</td>
 			<td>
-			<a href="<%=ctx%>/role/delete?id=<%=role.getId()%>">
-				Delete
-			</a>
+			<c:url value="/role/delete" var="deleteUrl">
+				<c:param name="id" value="${role.id}"/>
+			</c:url>
+			
+			<a href="${deleteUrl}">Delete</a>
 			</td>
 		</tr>
-		<% } %>
+		</c:forEach>
 	</table>
 	<p>
-	<a href="<%=ctx%>/index.jsp"> << Back to menu</a>
+	<a href="<c:url value="/index.jsp"/>"> << Back to menu</a>
 	</p>
 </body>
 </html>
